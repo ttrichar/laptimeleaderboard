@@ -1,5 +1,4 @@
 import logo from './logo.svg';
-import LapTable from './components/LapTable'
 import './App.css';
 
 function App() {
