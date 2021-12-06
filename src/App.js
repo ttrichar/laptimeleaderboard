@@ -39,7 +39,7 @@ class HomeComponent extends React.Component{
           </Container>
         </AppBar>
       
-          <Box className="boxbox" sx={{ display: 'flex', alignContent: 'space-between', flexWrap: 'wrap', justifyContent: 'center', padding: '20px',  alignContent: 'space-around'  }}>
+          <Box className="boxbox" sx={{ display: 'flex', alignContent: 'space-between', flexWrap: 'wrap', justifyContent: 'center', padding: '20px'}}>
             {this.state.cards}
           </Box>
      

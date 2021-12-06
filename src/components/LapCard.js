@@ -44,14 +44,13 @@ class LapCard extends React.Component{
       card = 
       <div className="cardField">
         <form onSubmit={this.handleSubmit} style={{color:"white"}}>
-            <TextField  label="Custom CSS" id="custom-css-outlined-input"
-
+            <TextField  
                 id="outlined-helperText"
                 label="username"
                 onChange={this.handleNameChange}
                 required
                 margin="normal"
-                color="secondary"
+
                 >
             </TextField>
             <br/>
