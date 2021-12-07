@@ -16,7 +16,6 @@ class LapCard extends React.Component{
         connected: false
     };
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
     this.handleKeyChange = this.handleKeyChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.openLapCard = this.openLapCard.bind(this);
@@ -29,6 +28,7 @@ class LapCard extends React.Component{
     this.setState({key: event.target.value});
   }
   handleSubmit(event) {
+    console.log("state on submit key: " +this.state.key+" and name: "+this.state.username)
     this.setState({connected: true})
     this.props.onComplete(true)
     event.preventDefault();
@@ -84,10 +84,8 @@ class LapCard extends React.Component{
     } else {
         card =
         <LapTable
-            key={this.state.key}
+            apikey={this.state.key}
             name={this.state.username} />
-   
-  
     }
     return (
 

@@ -21,6 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "deploy": "npm version patch && npm run build && npm publish ./_site --access public",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
