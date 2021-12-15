@@ -20,17 +20,22 @@ class LapTable extends React.Component{
   constructor(props){
     super(props);
     this.state={
-        PreviousLaps: []
+        PreviousLaps: [],
+        fastest: 100000
     };
     this.getLapData = this.getLapData.bind(this);
     this.getRndInteger = this.getRndInteger.bind(this);
-    let mockLaps = [{lap:1, laptime: this.getRndInteger(50,60)}, {lap:2, laptime: this.getRndInteger(50,60)}, {lap:3, laptime: this.getRndInteger(50,60)}, {lap:4, laptime: this.getRndInteger(50,60)} ,{lap:5, laptime: this.getRndInteger(50,60)}];
+    this.isfaster = this.isfaster.bind(this);
+   
 
   }
-
-
+  
+  isfaster(newLap){
+    if(newLap < this.state.fastest){
+      this.setState({fastest: newLap});
+    }
+  }
   async getLapData(key) {
-    let Lap;
     axios
         .get(
         'https://my-json-server.typicode.com/JackPenhale/mockJson/posts',
@@ -52,10 +57,13 @@ class LapTable extends React.Component{
   }
 
   getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
+    var rand = Math.random()*(max-min) + min;
+    var power = Math.pow(10, 3);
+    return Math.floor(rand*power) / power;
   }
 
   render(){
+    let mockLaps = [{lap:1, laptime: this.getRndInteger(50,60)}, {lap:2, laptime: this.getRndInteger(50,60)}, {lap:3, laptime: this.getRndInteger(50,60)}, {lap:4, laptime: this.getRndInteger(50,60)} ,{lap:5, laptime: this.getRndInteger(50,60)}];
     this.getLapData(this.props.apikey)
     console.log(this.state.PreviousLaps)
     return (
@@ -65,6 +73,7 @@ class LapTable extends React.Component{
             <TableRow>
                 <TableCell align="center" colSpan={3}>
                 <h3>{this.props.name}</h3>
+                <p>{this.state.fastest}</p>
                 </TableCell>
             </TableRow>
             <TableRow>
@@ -73,18 +82,14 @@ class LapTable extends React.Component{
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell align="right">1</TableCell>
-              <TableCell align="right">{this.mockLaps.laptime}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="right">2</TableCell>
-              <TableCell align="right">{this.getRndInteger(50,60)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="right">3</TableCell>
-              <TableCell align="right">{this.getRndInteger(50,60)}</TableCell>
-            </TableRow>
+          {mockLaps.map((row) => (
+                        <TableRow key={row.lap}>
+                            <TableCell align="right">
+                                {row.lap}
+                            </TableCell>
+                            <TableCell align="right">{row.laptime} {this.isfaster(row.laptime)}</TableCell>
+                        </TableRow>
+                    ))}
           </TableBody>
         </Table>
       </TableContainer>
