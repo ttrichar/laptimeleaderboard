@@ -10,8 +10,8 @@ env:
   Branches: main
   MainBranch: main
   NPMRegistry: https://registry.npmjs.org/
-  InstallCommand: npm ci
-  BuildCommand: npm run build
+  InstallCommand: yarn
+  BuildCommand: yarn build
   Output: ./build
 
 jobs:
@@ -82,12 +82,12 @@ jobs:
           registry-url: ${{ env.NPMRegistry }}
 
       # install npm dependencies from package-lock.json
-      - name: npm install
+      - name: yarn
         if: ${{ !!env.InstallCommand }}
         run: ${{ env.InstallCommand }}
 
       # build npm
-      - name: npm build
+      - name: yarn build
         if: ${{ !!env.BuildCommand }}
         run: ${{ env.BuildCommand }}
 
