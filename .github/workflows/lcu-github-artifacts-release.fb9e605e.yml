@@ -10,8 +10,8 @@ env:
   Branches: main
   MainBranch: main
   NPMRegistry: https://registry.npmjs.org/
-  InstallCommand: yarn
-  BuildCommand: yarn build
+  InstallCommand: npm ci
+  BuildCommand: npm run build
   Output: ./build
 
 jobs:
@@ -31,7 +31,6 @@ jobs:
         id: vars
         run: |
           branch=${GITHUB_REF##*/}
-
           echo ::set-output name=branchName::$branch
            
           if [ "$branch" == "${{ env.MainBranch }}" ]
@@ -40,12 +39,10 @@ jobs:
           else
               echo "::set-output name=versionBump::patch"
           fi
-
       - run: |
           echo "Set Variable Checks ${{ github.ref }}"
           echo "Current branch is ${{ steps.vars.outputs.branchName }}"
           echo "Version bump type is ${{ steps.vars.outputs.versionBump }}"
-
       # bump version and push tag
       - name: Bump version and push tag
         uses: fathym/github-tag-action@master
@@ -82,12 +79,12 @@ jobs:
           registry-url: ${{ env.NPMRegistry }}
 
       # install npm dependencies from package-lock.json
-      - name: yarn
+      - name: npm install
         if: ${{ !!env.InstallCommand }}
         run: ${{ env.InstallCommand }}
 
       # build npm
-      - name: yarn build
+      - name: npm build
         if: ${{ !!env.BuildCommand }}
         run: ${{ env.BuildCommand }}
 
